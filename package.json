@@ -1,0 +1,32 @@
+{
+  "name": "tabineko",
+  "description": "Premium mouse gesture extension for Chrome, built with Astro and Bun.",
+  "version": "1.0.0",
+  "module": "bundler.ts",
+  "type": "module",
+  "dependencies": {
+    "astro": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
+    "@types/chrome": "^0.0.246",
+    "adm-zip": "^0.5.16",
+    "bun-types": "latest",
+    "prettier": "^3.0.3",
+    "sharp": "^0.34.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build && cd build-tools && bun extract-inline.ts && bun bundler.ts",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,md}' '!build/**' '!node_modules/**'",
+    "csp": "cd build-tools && bun extract-inline.ts",
+    "icons": "cd build-tools && bun create-icons.ts",
+    "release": "bun run format && bun run build && bun run icons && bun run csp && cd build-tools && bun bundler.ts && bun pack.ts"
+  }
+}
