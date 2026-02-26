@@ -1,0 +1,12 @@
+/* TabiNeko — Content styles injected into webpages */
+
+/* Gesture trail dot animation (applied via inline styles from content.ts) */
+[data-tabineko-trail] {
+  contain: strict;
+}
+
+[data-tabineko-label] {
+  contain: layout style;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

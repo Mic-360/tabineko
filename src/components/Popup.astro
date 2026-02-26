@@ -1,0 +1,224 @@
+<!--
+  Popup.astro — TabiNeko brand popup
+  A calm, premium gesture guide following the TabiNeko Brand Kit.
+-->
+<div class="popup">
+  <header class="popup-header">
+    <div class="logo-area">
+      <img
+        class="logo-icon"
+        src="/assets/images/icon128.png"
+        alt="TabiNeko"
+        width="36"
+        height="36"
+      />
+      <h1 class="logo-text">TabiNeko</h1>
+    </div>
+    <p class="tagline">Right-click. Swipe. Flow.</p>
+  </header>
+
+  <section class="gestures">
+    <h2 class="section-title">Gestures</h2>
+
+    <div class="gesture-list">
+      <div class="gesture-item">
+        <span class="gesture-arrows">→ ↓</span>
+        <span class="gesture-label">Next tab</span>
+      </div>
+      <div class="gesture-item">
+        <span class="gesture-arrows">← ↑</span>
+        <span class="gesture-label">Previous tab</span>
+      </div>
+      <div class="gesture-item">
+        <span class="gesture-arrows">↑</span>
+        <span class="gesture-label">Scroll to top</span>
+      </div>
+      <div class="gesture-item">
+        <span class="gesture-arrows">↓</span>
+        <span class="gesture-label">Scroll to bottom</span>
+      </div>
+      <div class="gesture-item">
+        <span class="gesture-arrows">←</span>
+        <span class="gesture-label">Go back</span>
+      </div>
+      <div class="gesture-item">
+        <span class="gesture-arrows">→</span>
+        <span class="gesture-label">Go forward</span>
+      </div>
+      <div class="gesture-item">
+        <span class="gesture-arrows">↻</span>
+        <span class="gesture-label">Refresh page</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="popup-footer">
+    <span class="footer-text">Hold right-click and drag to gesture</span>
+  </footer>
+</div>
+
+<style is:global>
+  /* ─── TabiNeko Brand Tokens ─── */
+  :root {
+    /* Sage scale */
+    --tabi-sage-100: #eef3ea;
+    --tabi-sage-200: #dde6d5;
+    --tabi-sage-300: #c5d3bc;
+    --tabi-sage-400: #aebfa2;
+    --tabi-sage-500: #9caf88;
+    --tabi-sage-600: #879c73;
+    --tabi-sage-700: #6e825c;
+    --tabi-sage-800: #556646;
+
+    /* Neutrals */
+    --tabi-warm-white: #f9faf7;
+    --tabi-cream: #f2f4ec;
+    --tabi-mist: #e6e8e2;
+    --tabi-calm-gray: #9da39a;
+    --tabi-ink: #2e2f2c;
+
+    /* Motion */
+    --tabi-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --tabi-duration: 200ms;
+
+    /* Shadows */
+    --tabi-shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.04);
+    --tabi-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  /* ─── Reset ─── */
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
+    background: var(--tabi-warm-white);
+    color: var(--tabi-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ─── Popup Container ─── */
+  .popup {
+    width: 280px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ─── Header ─── */
+  .popup-header {
+    text-align: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--tabi-mist);
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .logo-icon {
+    border-radius: 10px;
+    filter: drop-shadow(0 2px 6px rgba(156, 175, 136, 0.3));
+    transition: transform var(--tabi-duration) var(--tabi-ease);
+  }
+
+  .logo-icon:hover {
+    transform: scale(1.05);
+  }
+
+  .logo-text {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--tabi-ink);
+    letter-spacing: -0.3px;
+  }
+
+  .tagline {
+    font-size: 12px;
+    color: var(--tabi-calm-gray);
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+
+  /* ─── Gestures Section ─── */
+  .gestures {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--tabi-calm-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .gesture-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .gesture-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--tabi-cream);
+    transition:
+      background-color var(--tabi-duration) var(--tabi-ease),
+      transform var(--tabi-duration) var(--tabi-ease);
+  }
+
+  .gesture-item:hover {
+    background: var(--tabi-sage-200);
+    transform: translateX(2px);
+  }
+
+  .gesture-arrows {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--tabi-sage-700);
+    min-width: 36px;
+    letter-spacing: 2px;
+  }
+
+  .gesture-label {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--tabi-ink);
+  }
+
+  /* ─── Footer ─── */
+  .popup-footer {
+    text-align: center;
+    padding-top: 8px;
+    border-top: 1px solid var(--tabi-mist);
+  }
+
+  .footer-text {
+    font-size: 11px;
+    color: var(--tabi-calm-gray);
+    font-weight: 400;
+  }
+</style>
