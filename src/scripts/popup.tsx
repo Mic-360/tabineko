@@ -28,8 +28,29 @@ function Popup(): React.JSX.Element {
   const importSettings = async (): Promise<void> => {
     const pasted = prompt('Paste exported settings JSON');
     if (!pasted) return;
-    const parsed = JSON.parse(pasted) as ExtensionSettings;
-    setSettings(parsed);
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(pasted);
+    } catch {
+      alert('Invalid JSON. Please check your exported settings and try again.');
+      return;
+    }
+
+    const partial = parsed as Partial<ExtensionSettings>;
+    const merged: ExtensionSettings = {
+      ...DEFAULT_SETTINGS,
+      ...partial,
+      gestures: {
+        ...DEFAULT_SETTINGS.gestures,
+        ...(partial.gestures ?? {}),
+      },
+      advanced: {
+        ...DEFAULT_SETTINGS.advanced,
+        ...(partial.advanced ?? {}),
+      },
+    };
+    setSettings(merged);
   };
 
   return (

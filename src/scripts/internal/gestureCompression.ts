@@ -11,20 +11,23 @@ export interface CompressionConfig {
 
 export class GestureCompressor {
   private anchor: Point;
+  private prev: Point;
   private directions: Direction[] = [];
   private totalDistance = 0;
 
   constructor(start: Point, private readonly config: CompressionConfig) {
     this.anchor = start;
+    this.prev = start;
   }
 
   addPoint(point: Point): void {
+    this.totalDistance += Math.hypot(point.x - this.prev.x, point.y - this.prev.y);
+    this.prev = point;
+
     const dx = point.x - this.anchor.x;
     const dy = point.y - this.anchor.y;
     const absDx = Math.abs(dx);
     const absDy = Math.abs(dy);
-    const distance = Math.hypot(dx, dy);
-    this.totalDistance += distance;
 
     if (
       absDx < this.config.directionThreshold &&

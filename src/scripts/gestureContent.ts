@@ -116,8 +116,8 @@ function endGesture(_event: PointerEvent): void {
   log('gesture-complete', { pattern, distance });
 }
 
-function init(): void {
-  loadSettings();
+async function init(): Promise<void> {
+  await loadSettings();
 
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area === 'local' && changes.settings?.newValue) {
