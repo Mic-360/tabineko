@@ -4,8 +4,7 @@
   "short_name": "TabiNeko",
   "description": "Navigate your tabs effortlessly with right-click mouse gestures. Swipe to go back, forward, scroll, and switch tabs.",
   "version": "1.0.0",
-  "permissions": ["tabs", "storage", "sessions", "scripting", "action"],
-  "host_permissions": ["http://*/*", "https://*/*"],
+  "permissions": ["tabs", "activeTab", "scripting", "storage"],
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
@@ -29,10 +28,6 @@
     "48": "assets/images/icon48.png",
     "128": "assets/images/icon128.png"
   },
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self'"
-  },
-  "web_accessible_resources": [],
   "minimum_chrome_version": "100",
   "offline_enabled": true
 }

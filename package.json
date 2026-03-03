@@ -19,7 +19,7 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "dev": "bash -lc 'astro build --watch & bun --watch build-tools/bundler.ts'",
+    "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build && cd build-tools && bun extract-inline.ts && bun bundler.ts",
     "preview": "astro preview",
@@ -27,7 +27,6 @@
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,md}' '!build/**' '!node_modules/**'",
     "csp": "cd build-tools && bun extract-inline.ts",
     "icons": "cd build-tools && bun create-icons.ts",
-    "release": "bun run format && bun run build && bun run icons && bun run csp && cd build-tools && bun bundler.ts && bun pack.ts",
-    "zip": "cd build-tools && bun pack.ts"
+    "release": "bun run format && bun run build && bun run icons && bun run csp && cd build-tools && bun bundler.ts && bun pack.ts"
   }
 }
