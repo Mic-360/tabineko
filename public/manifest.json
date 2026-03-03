@@ -2,25 +2,29 @@
   "manifest_version": 3,
   "name": "TabiNeko — Mouse Gestures",
   "short_name": "TabiNeko",
-  "description": "Navigate your tabs effortlessly with right-click mouse gestures. Swipe to go back, forward, scroll, and switch tabs.",
-  "version": "1.0.0",
-  "permissions": ["tabs", "activeTab", "scripting", "storage"],
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["content.js"],
-      "css": ["content.css"],
-      "run_at": "document_idle",
-      "all_frames": false
-    }
-  ],
+  "description": "High-performance right-click mouse gestures for tab and page navigation.",
+  "version": "1.1.0",
+  "permissions": ["tabs", "scripting", "storage", "activeTab", "sessions"],
+  "host_permissions": ["http://*/*", "https://*/*"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["gestureContent.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
   "action": {
     "default_title": "TabiNeko Gestures",
-    "default_popup": "index.html"
+    "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
   },
   "icons": {
     "16": "assets/images/icon16.png",
@@ -28,6 +32,5 @@
     "48": "assets/images/icon48.png",
     "128": "assets/images/icon128.png"
   },
-  "minimum_chrome_version": "100",
-  "offline_enabled": true
+  "minimum_chrome_version": "114"
 }
