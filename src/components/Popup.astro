@@ -1,224 +1,208 @@
-<!--
-  Popup.astro — TabiNeko brand popup
-  A calm, premium gesture guide following the TabiNeko Brand Kit.
--->
-<div class="popup">
-  <header class="popup-header">
-    <div class="logo-area">
-      <img
-        class="logo-icon"
-        src="/assets/images/icon128.png"
-        alt="TabiNeko"
-        width="36"
-        height="36"
-      />
-      <h1 class="logo-text">TabiNeko</h1>
-    </div>
-    <p class="tagline">Right-click. Swipe. Flow.</p>
+---
+const gestureRows = [
+  { seq: '→ ↓', action: 'Next Tab', icon: '🗂️' },
+  { seq: '← ↑', action: 'Previous Tab', icon: '🧭' },
+  { seq: '↑', action: 'Scroll to Top', icon: '⤒' },
+  { seq: '↓', action: 'Scroll to Bottom', icon: '⤓' },
+  { seq: '←', action: 'Go Back', icon: '↩️' },
+  { seq: '→', action: 'Go Forward', icon: '↪️' },
+  { seq: '↑ ↓', action: 'Reload (Shift = Hard)', icon: '🔄' },
+  { seq: '↓ ↑', action: 'Duplicate Tab', icon: '🧬' },
+  { seq: '→ ←', action: 'Close Tab', icon: '✖️' },
+  { seq: '← →', action: 'Restore Last Closed Tab', icon: '♻️' },
+  { seq: '↑ →', action: 'New Tab to Right', icon: '➕' },
+  { seq: '↓ ←', action: 'Pin / Unpin Tab', icon: '📌' },
+  { seq: '↑ ↓ ↑', action: 'Hard Reload', icon: '💨' },
+];
+---
+
+<div class="popup-shell">
+  <header class="header">
+    <h1 class="wordmark">🐾 TabiNeko</h1>
+    <p class="subtitle">Gesture Navigator</p>
   </header>
 
-  <section class="gestures">
-    <h2 class="section-title">Gestures</h2>
-
-    <div class="gesture-list">
-      <div class="gesture-item">
-        <span class="gesture-arrows">→ ↓</span>
-        <span class="gesture-label">Next tab</span>
+  <section class="sheet" aria-label="Gesture cheatsheet">
+    {gestureRows.map((row, index) => (
+      <div class="row" style={`--row-index:${index};`}>
+        <span class="arrows" aria-label={row.seq}>
+          {row.seq.split(' ').map((arrow, arrowIndex) => (
+            <svg
+              class="arrow"
+              viewBox="0 0 28 28"
+              role="img"
+              aria-hidden="true"
+              style={`--arrow-index:${arrowIndex};`}
+            >
+              <text x="14" y="19" text-anchor="middle">{arrow}</text>
+            </svg>
+          ))}
+        </span>
+        <span class="action">{row.action}</span>
+        <span class="icon">{row.icon}</span>
       </div>
-      <div class="gesture-item">
-        <span class="gesture-arrows">← ↑</span>
-        <span class="gesture-label">Previous tab</span>
-      </div>
-      <div class="gesture-item">
-        <span class="gesture-arrows">↑</span>
-        <span class="gesture-label">Scroll to top</span>
-      </div>
-      <div class="gesture-item">
-        <span class="gesture-arrows">↓</span>
-        <span class="gesture-label">Scroll to bottom</span>
-      </div>
-      <div class="gesture-item">
-        <span class="gesture-arrows">←</span>
-        <span class="gesture-label">Go back</span>
-      </div>
-      <div class="gesture-item">
-        <span class="gesture-arrows">→</span>
-        <span class="gesture-label">Go forward</span>
-      </div>
-      <div class="gesture-item">
-        <span class="gesture-arrows">↻</span>
-        <span class="gesture-label">Refresh page</span>
-      </div>
-    </div>
+    ))}
   </section>
 
-  <footer class="popup-footer">
-    <span class="footer-text">Hold right-click and drag to gesture</span>
+  <footer class="footer">
+    <label class="toggle-row" for="enabled-toggle">
+      <span>Enable Extension</span>
+      <span class="toggle">
+        <input id="enabled-toggle" type="checkbox" />
+        <span class="slider"></span>
+      </span>
+    </label>
+    <span class="version" id="version-badge">v1.0.0</span>
   </footer>
 </div>
 
 <style is:global>
-  /* ─── TabiNeko Brand Tokens ─── */
   :root {
-    /* Sage scale */
-    --tabi-sage-100: #eef3ea;
-    --tabi-sage-200: #dde6d5;
-    --tabi-sage-300: #c5d3bc;
-    --tabi-sage-400: #aebfa2;
-    --tabi-sage-500: #9caf88;
-    --tabi-sage-600: #879c73;
-    --tabi-sage-700: #6e825c;
-    --tabi-sage-800: #556646;
-
-    /* Neutrals */
-    --tabi-warm-white: #f9faf7;
-    --tabi-cream: #f2f4ec;
-    --tabi-mist: #e6e8e2;
-    --tabi-calm-gray: #9da39a;
-    --tabi-ink: #2e2f2c;
-
-    /* Motion */
-    --tabi-ease: cubic-bezier(0.22, 1, 0.36, 1);
-    --tabi-duration: 200ms;
-
-    /* Shadows */
-    --tabi-shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.04);
-    --tabi-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --color-bg: #1a1f1e;
+    --color-surface: #222927;
+    --color-accent: #86ac7f;
+    --color-accent-hover: #a8c9a0;
+    --color-text: #e8ede7;
+    --color-text-muted: #7a9178;
+    --color-row-hover: rgba(134, 172, 127, 0.08);
+    --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.4);
+    --transition-fast: 150ms ease;
+    --popup-open: 180ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* ─── Reset ─── */
-  *,
-  *::before,
-  *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
   body {
     margin: 0;
-    font-family:
-      'Inter',
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      sans-serif;
-    background: var(--tabi-warm-white);
-    color: var(--tabi-ink);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
   }
 
-  /* ─── Popup Container ─── */
-  .popup {
-    width: 280px;
-    padding: 20px;
+  .popup-shell {
+    width: 320px;
+    max-height: 520px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
+    padding: 14px;
+    animation: popup-in var(--popup-open);
   }
 
-  /* ─── Header ─── */
-  .popup-header {
-    text-align: center;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--tabi-mist);
+  .header {
+    background: var(--color-surface);
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: var(--shadow-soft);
   }
 
-  .logo-area {
-    display: flex;
+  .wordmark { margin: 0; font-size: 24px; }
+  .subtitle { margin: 4px 0 0; color: var(--color-text-muted); font-size: 13px; }
+
+  .sheet {
+    background: var(--color-surface);
+    border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+    overflow: auto;
+    max-height: 380px;
+    padding: 8px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 86px 1fr auto;
     align-items: center;
-    justify-content: center;
     gap: 10px;
-    margin-bottom: 6px;
-  }
-
-  .logo-icon {
     border-radius: 10px;
-    filter: drop-shadow(0 2px 6px rgba(156, 175, 136, 0.3));
-    transition: transform var(--tabi-duration) var(--tabi-ease);
+    padding: 9px 10px;
+    opacity: 0;
+    transform: translateX(-8px);
+    animation: row-in 220ms ease forwards;
+    animation-delay: calc(var(--row-index) * 40ms);
+    transition: background var(--transition-fast);
   }
 
-  .logo-icon:hover {
-    transform: scale(1.05);
+  .row:hover { background: var(--color-row-hover); }
+
+  .arrows { display: inline-flex; gap: 2px; }
+
+  .arrow {
+    width: 24px;
+    height: 24px;
+    fill: var(--color-accent);
+    opacity: 0;
+    transform: translateX(-6px);
+    animation: arrow-in 220ms ease forwards;
+    animation-delay: calc(var(--arrow-index) * 80ms + var(--row-index) * 20ms);
   }
 
-  .logo-text {
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--tabi-ink);
-    letter-spacing: -0.3px;
-  }
+  .arrow text { fill: var(--color-accent); font-size: 16px; font-weight: 700; }
 
-  .tagline {
-    font-size: 12px;
-    color: var(--tabi-calm-gray);
-    font-weight: 400;
-    letter-spacing: 0.2px;
-  }
+  .action { font-size: 13px; }
+  .icon { color: var(--color-text-muted); }
 
-  /* ─── Gestures Section ─── */
-  .gestures {
+  .footer {
+    background: var(--color-surface);
+    border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+    padding: 12px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .section-title {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--tabi-calm-gray);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .gesture-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .gesture-item {
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 8px 12px;
-    border-radius: 10px;
-    background: var(--tabi-cream);
-    transition:
-      background-color var(--tabi-duration) var(--tabi-ease),
-      transform var(--tabi-duration) var(--tabi-ease);
+    align-items: center;
   }
 
-  .gesture-item:hover {
-    background: var(--tabi-sage-200);
-    transform: translateX(2px);
+  .toggle-row { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+
+  .toggle input { display: none; }
+
+  .slider {
+    width: 40px;
+    height: 22px;
+    border-radius: 999px;
+    display: inline-block;
+    background: var(--color-bg);
+    position: relative;
+    transition: background var(--transition-fast);
   }
 
-  .gesture-arrows {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--tabi-sage-700);
-    min-width: 36px;
-    letter-spacing: 2px;
+  .slider::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-text);
+    transition: transform var(--transition-fast);
   }
 
-  .gesture-label {
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--tabi-ink);
+  .toggle input:checked + .slider {
+    background: var(--color-accent);
   }
 
-  /* ─── Footer ─── */
-  .popup-footer {
-    text-align: center;
-    padding-top: 8px;
-    border-top: 1px solid var(--tabi-mist);
+  .toggle input:checked + .slider::after {
+    transform: translateX(18px);
   }
 
-  .footer-text {
+  .version {
+    color: var(--color-text-muted);
     font-size: 11px;
-    color: var(--tabi-calm-gray);
-    font-weight: 400;
+    border: 1px solid var(--color-text-muted);
+    border-radius: 999px;
+    padding: 3px 8px;
+  }
+
+  @keyframes popup-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes row-in {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes arrow-in {
+    to { opacity: 1; transform: translateX(0); }
   }
 </style>
